@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ilyah\\fiit\\kontur\\mediatorTest\\mediator\\mediator.csproj": {}
+    "C:\\Users\\i.rybin\\mediatorTest\\mediator\\mediator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ilyah\\fiit\\kontur\\mediatorTest\\mediator\\mediator.csproj": {
+    "C:\\Users\\i.rybin\\mediatorTest\\mediator\\mediator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ilyah\\fiit\\kontur\\mediatorTest\\mediator\\mediator.csproj",
+        "projectUniqueName": "C:\\Users\\i.rybin\\mediatorTest\\mediator\\mediator.csproj",
         "projectName": "mediator",
-        "projectPath": "C:\\Users\\ilyah\\fiit\\kontur\\mediatorTest\\mediator\\mediator.csproj",
-        "packagesPath": "C:\\Users\\ilyah\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ilyah\\fiit\\kontur\\mediatorTest\\mediator\\obj\\",
+        "projectPath": "C:\\Users\\i.rybin\\mediatorTest\\mediator\\mediator.csproj",
+        "packagesPath": "C:\\Users\\i.rybin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\i.rybin\\mediatorTest\\mediator\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\ilyah\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\i.rybin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -72,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.104\\RuntimeIdentifierGraph.json"
         }
       }
     }

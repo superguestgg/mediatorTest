@@ -15,9 +15,13 @@ namespace mediator;
         public SecretMessageController(IMediator mediator) => _mediator = mediator;
         
         [HttpGet("getForm")]
-        public async Task<string> GetSecretMessageForm([FromRoute] GetSecretMessageForm query, CancellationToken cancellationToken)
+        public async Task<ContentResult> GetSecretMessageForm([FromRoute] GetSecretMessageForm query, CancellationToken cancellationToken)
         {
-            return await _mediator.Send(query, cancellationToken);
+            return new ContentResult
+            {
+                Content = await _mediator.Send(query, cancellationToken),
+                ContentType = "text/html"
+            };
         }
 
         [HttpGet("createByUrl/{message}")]

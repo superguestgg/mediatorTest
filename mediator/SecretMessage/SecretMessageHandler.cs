@@ -9,8 +9,8 @@ public class SecretMessageHandler:
     IRequestHandler<GetSecretMessageAddressCommand, string>,
     IRequestHandler<GetSecretMessageCommand, string>
 {
-    private readonly SecretMessageService _messagesService;
-    public SecretMessageHandler(SecretMessageService messagesService)
+    private readonly ISecretMessageService _messagesService;
+    public SecretMessageHandler(ISecretMessageService messagesService)
     {
         _messagesService = messagesService;
     }

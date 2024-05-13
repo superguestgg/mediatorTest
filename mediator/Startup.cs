@@ -1,4 +1,5 @@
 using mediator.People;
+using mediator.SecretMessage;
 using mediator.Weather;
 using MediatR;
 
