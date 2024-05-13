@@ -1,3 +1,5 @@
+using mediator.People;
+using mediator.Weather;
 using MediatR;
 
 namespace mediator;
@@ -14,8 +16,12 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        services.AddMediatR(typeof(PeopleHandler)); // Регистрируем MediatR
-        // Добавьте другие сервисы
+        services.AddMediatR(typeof(PeopleHandler));
+        services.AddMediatR(typeof(WeatherHandler));
+        services.AddHttpClient<WeatherService>();
+        services.AddScoped<WeatherService>();
+        services.AddHttpClient<SecretMessageService>();
+        services.AddScoped<SecretMessageService>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
