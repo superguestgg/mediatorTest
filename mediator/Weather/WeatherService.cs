@@ -1,3 +1,5 @@
+using mediator.Weather;
+
 namespace mediator;
 
 using System;
@@ -5,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-public class WeatherService
+public class WeatherService : IWeatherService
 {
     private readonly HttpClient _httpClient;
     private const string AppId = "9af89291e5e450b347fddca88530a82c";

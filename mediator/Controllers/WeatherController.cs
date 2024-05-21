@@ -14,12 +14,24 @@ public partial class WeatherController : ControllerBase
     /// <param name = "mediator">Mediator.</param>
     public WeatherController(IMediator mediator) => _mediator = mediator;
     
+    /// <summary>
+    ///     Returns current temperature in city
+    /// </summary>
+    /// <param name="cityName"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{cityName}/now")]
     public async Task<string> WeatherNowCommand([FromRoute] string cityName, CancellationToken cancellationToken)
     {
         return await _mediator.Send(new WeatherNowCommand(cityName), cancellationToken);
     }
 
+    /// <summary>
+    ///     Returns weather fro next week for City
+    /// </summary>
+    /// <param name="cityName"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet("{cityName}/week")]
     public async Task<string> WeatherWeekCommand([FromRoute] string cityName, CancellationToken cancellationToken)
     {

@@ -10,6 +10,7 @@ public class SecretMessageHandler:
     IRequestHandler<GetSecretMessageCommand, string>
 {
     private readonly ISecretMessageService _messagesService;
+    
     public SecretMessageHandler(ISecretMessageService messagesService)
     {
         _messagesService = messagesService;
@@ -17,7 +18,7 @@ public class SecretMessageHandler:
     
     public async Task<string> Handle(GetSecretMessageForm request, CancellationToken cancellationToken)
     {
-        return "<form action='create' method='Post'><input name='message'><input type='submit'></form>";
+        return "<form action='create' method='Post'><input name='message' style='width:200px; height:100px'><input type='submit'></form>";
     }
 
     public async Task<string> Handle(CreateSecretMessageByUrlCommand request, CancellationToken cancellationToken)

@@ -20,9 +20,13 @@ public class Startup
         services.AddMediatR(typeof(PeopleHandler));
         services.AddMediatR(typeof(WeatherHandler));
         services.AddHttpClient<WeatherService>();
-        services.AddScoped<WeatherService>();
+        services.AddScoped<IWeatherService, WeatherService>();
         services.AddHttpClient<SecretMessageService>();
-        services.AddScoped<SecretMessageService>();
+        services.AddScoped<ISecretMessageService, SecretMessageService>();
+        
+        services.AddMvc(options => options.EnableEndpointRouting = false);
+
+        services.AddSwaggerGen();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -38,5 +42,19 @@ public class Startup
         {
             endpoints.MapControllers();
         });
+        app.UseSwagger()
+            .UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+            });
+
+        app.UseMvc(
+            routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "/{controller=Home}/{action=Index}/{id?}");
+            }
+        );
     }
 }

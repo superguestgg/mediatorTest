@@ -4,9 +4,9 @@ namespace mediator.Weather;
 
 public class WeatherHandler : IRequestHandler<WeatherNowCommand, string>, IRequestHandler<WeatherWeekCommand, string>
 {
-    private WeatherService _ws;
+    private IWeatherService _ws;
 
-    public WeatherHandler(WeatherService ws)
+    public WeatherHandler(IWeatherService ws)
     {
         _ws = ws;
     }

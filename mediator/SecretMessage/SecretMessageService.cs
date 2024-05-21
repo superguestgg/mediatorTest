@@ -20,9 +20,9 @@ public class SecretMessageService : ISecretMessageService
             privateKey = await GenerateRandomString(100);
         Messages[privateKey] = message;
         
-        var publicKey = await GenerateRandomString();
+        var publicKey = await GenerateRandomString(50);
         while (MessagesKeys.ContainsKey(publicKey))
-            publicKey = await GenerateRandomString(100);
+            publicKey = await GenerateRandomString(50);
         MessagesKeys[publicKey] = privateKey;
         return publicKey;
     }
@@ -30,11 +30,8 @@ public class SecretMessageService : ISecretMessageService
     public async Task<string> GetPrivateKey(string publicKey)
     {
         if (MessagesKeys.TryGetValue(publicKey, out var privateKey))
-        {
-            MessagesKeys.Remove(publicKey);
             return privateKey;
-        }
-            
+        
         return await GenerateRandomString(100);
     }
         
@@ -42,7 +39,7 @@ public class SecretMessageService : ISecretMessageService
     {
         if (Messages.TryGetValue(privateKey, out var message))
         {
-            MessagesKeys.Remove(privateKey);
+            Messages.Remove(privateKey);
             return message;
         }
         return await GenerateRandomString(10);
