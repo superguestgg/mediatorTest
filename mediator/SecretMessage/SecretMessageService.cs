@@ -1,18 +1,21 @@
 using System.Text;
 using mediator.Encryption;
+using mediator.Hare;
 
 namespace mediator.SecretMessage;
 
 public class SecretMessageService : ISecretMessageService
 {
     private IEncrypter _encrypter;
+    public IRabbitClient _rabbitClient;
     private static readonly Dictionary<string, string> MessagesKeys = new Dictionary<string, string>();
     private static readonly Dictionary<string, string> Messages = new Dictionary<string, string>();
     private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     
-    public SecretMessageService(IEncrypter encrypter)
+    public SecretMessageService(IEncrypter encrypter, IRabbitClient rabbitClient)
     {
         _encrypter = encrypter;
+        _rabbitClient = rabbitClient;
     }
 
     public async Task<string> SaveMessage(string message)
@@ -30,13 +33,10 @@ public class SecretMessageService : ISecretMessageService
         
         
         var publicKey = await GenerateRandomString(50);
-        var publicKeyEncryptKey = await GenerateRandomString(50);
-
 
         while (MessagesKeys.ContainsKey(publicKey))
             publicKey = await GenerateRandomString(50);
         MessagesKeys[publicKey] = encodedPrivateKey;
-        // var encodedPublicKey = _encrypter.Encode(publicKey, publicKeyEncryptKey);
 
         return $"{publicKey}.{privateKeyEncryptKey}.{messageEncryptKey}";
     }
