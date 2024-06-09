@@ -1,3 +1,4 @@
+using mediator.Encryption;
 using mediator.People;
 using mediator.SecretMessage;
 using mediator.Weather;
@@ -23,6 +24,8 @@ public class Startup
         services.AddScoped<IWeatherService, WeatherService>();
         services.AddHttpClient<SecretMessageService>();
         services.AddScoped<ISecretMessageService, SecretMessageService>();
+        services.AddScoped<IEncrypter, MyEncrypter>();
+
         
         services.AddMvc(options => options.EnableEndpointRouting = false);
 

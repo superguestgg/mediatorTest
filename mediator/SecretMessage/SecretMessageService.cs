@@ -1,46 +1,65 @@
 using System.Text;
+using mediator.Encryption;
 
 namespace mediator.SecretMessage;
 
 public class SecretMessageService : ISecretMessageService
 {
+    private IEncrypter _encrypter;
     private static readonly Dictionary<string, string> MessagesKeys = new Dictionary<string, string>();
     private static readonly Dictionary<string, string> Messages = new Dictionary<string, string>();
     private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     
-    public SecretMessageService()
+    public SecretMessageService(IEncrypter encrypter)
     {
-        
+        _encrypter = encrypter;
     }
 
     public async Task<string> SaveMessage(string message)
     {
+        var messageEncryptKey = await GenerateRandomString(100);
+        var encodedMessage = _encrypter.Encode(message, messageEncryptKey);
+
         var privateKey = await GenerateRandomString(100);
+        var privateKeyEncryptKey = await GenerateRandomString(100);
+
         while (Messages.ContainsKey(privateKey))
             privateKey = await GenerateRandomString(100);
-        Messages[privateKey] = message;
+        Messages[privateKey] = encodedMessage;
+        var encodedPrivateKey = _encrypter.Encode(privateKey, privateKeyEncryptKey);
+        
         
         var publicKey = await GenerateRandomString(50);
+        var publicKeyEncryptKey = await GenerateRandomString(50);
+
+
         while (MessagesKeys.ContainsKey(publicKey))
             publicKey = await GenerateRandomString(50);
-        MessagesKeys[publicKey] = privateKey;
-        return publicKey;
+        MessagesKeys[publicKey] = encodedPrivateKey;
+        // var encodedPublicKey = _encrypter.Encode(publicKey, publicKeyEncryptKey);
+
+        return $"{publicKey}.{privateKeyEncryptKey}.{messageEncryptKey}";
     }
     
-    public async Task<string> GetPrivateKey(string publicKey)
+    public async Task<string> GetPrivateKey(string publicKeyWithEncryptKey)
     {
+        var publicKey = publicKeyWithEncryptKey.Split('.')[0];
+        var privateKeyEncryptKey = publicKeyWithEncryptKey.Split('.')[1];
         if (MessagesKeys.TryGetValue(publicKey, out var privateKey))
-            return privateKey;
+            return _encrypter.Decode(privateKey, privateKeyEncryptKey);
         
         return await GenerateRandomString(100);
     }
         
-    public async Task<string> GetMessage(string privateKey)
+    public async Task<string> GetMessage(string privateKeyWithEncryptKey)
     {
+        var privateKey = privateKeyWithEncryptKey.Split('.')[0];
+        var messageEncryptKey = privateKeyWithEncryptKey.Split('.')[1];
+        
         if (Messages.TryGetValue(privateKey, out var message))
         {
             Messages.Remove(privateKey);
-            return message;
+            return _encrypter.Decode(message, messageEncryptKey);
         }
         return await GenerateRandomString(10);
     }
